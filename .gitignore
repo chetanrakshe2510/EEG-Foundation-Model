@@ -1,0 +1,52 @@
+# Ignore Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# Ignore virtual environments
+.env
+.venv
+venv/
+eeg_env/
+
+# Ignore IDE/editor files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Ignore data and EEG recordings
+data/
+*/data/
+*.edf
+*.fif
+*.bdf
+*.vhdr
+*.eeg
+*.vmrk
+*.set
+*.cnt
+
+# Ignore model weights and checkpoints
+artifacts/
+*.pth
+*.pt
+*.ckpt
+
+# Ignore temporary outputs and logs
+outputs/
+logs/
+results/
+*.log
+*.csv
+
+# Ignore Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Ignore test data and cache
+tests/dummy_bids_data/
+.cache/
+
+
