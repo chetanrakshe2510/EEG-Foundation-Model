@@ -58,7 +58,7 @@ Config.DATA_ROOT = Path(r"G:\TA_work\EEG Competition\Modular_code\data")
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/EEG-Challenge-2025.git
+   git clone https://github.com/chetanrakshe2510/EEG-Foundation-Model.git
    cd EEG-Challenge-2025
    ```
 
