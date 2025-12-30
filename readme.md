@@ -55,6 +55,51 @@ graph LR
     F -.->|Load Weights| H
 ```
 
+
+### 🏗️ Pretraining 
+
+
+```mermaid
+graph LR
+    %% Styles
+    classDef tensor fill:#e0e0e0,stroke:#333,stroke-width:1px;
+    classDef aug fill:#ffe0b2,stroke:#f57c00,stroke-width:2px;
+    classDef enc fill:#c8e6c9,stroke:#388e3c,stroke-width:2px;
+    classDef head fill:#d1c4e9,stroke:#512da8,stroke-width:2px;
+    classDef loss fill:#ffcdd2,stroke:#d32f2f,stroke-width:2px;
+
+    %% Input
+    X("<b>Input Window</b><br/>Shape: C x T"):::tensor --> Aug1
+    X --> Aug2
+
+    %% Branch 1
+    subgraph View_1 [View 1]
+        Aug1["<b>Augmentation A</b><br/>TimeReverse<br/>GaussNoise<br/>DropChannels"]:::aug --> Enc1["<b>Backbone</b><br/>EEGNeX"]:::enc
+        Enc1 --> Rep1(h1):::tensor
+        Rep1 --> Proj1["<b>Projection Head</b><br/>Linear → ReLU → Linear"]:::head
+        Proj1 --> Z1(z1):::tensor
+    end
+
+    %% Branch 2
+    subgraph View_2 [View 2]
+        Aug2["<b>Augmentation B</b><br/>TimeReverse<br/>GaussNoise<br/>DropChannels"]:::aug --> Enc2["<b>Backbone</b><br/>EEGNeX"]:::enc
+        Enc2 --> Rep2(h2):::tensor
+        Rep2 --> Proj2["<b>Projection Head</b><br/>Linear → ReLU → Linear"]:::head
+        Proj2 --> Z2(z2):::tensor
+    end
+
+    %% Loss
+    Z1 --> Loss{"<b>NT-Xent Loss</b><br/>Maximize Similarity"}:::loss
+    Z2 --> Loss
+
+    %% Shared Weights Note
+    Enc1 -. Shared Weights .- Enc2
+    Proj1 -. Shared Weights .- Proj2
+
+    click Enc1 "Source: model.py (EEGNeX_Backbone)"
+    click Proj1 "Source: pretrain.py (ContrastiveModel)"
+```
+
 ### 🧠 Detailed Architecture Flow
 
 ```mermaid
